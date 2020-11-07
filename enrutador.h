@@ -21,8 +21,7 @@ public:
     void setNombre(const string &value);
 
     void Conectar_Enrutador(const string &name,int costo);
-    void Quitar_Enrutador(const string &name);
-    bool Comprobar_conexion(const string &name);
+    void eliminar_Enrutador(const string &name);
 };
 
 #endif // ENRUTADOR_H

@@ -1,25 +1,26 @@
 #ifndef RED_H
 #define RED_H
 #include "enrutador.h"
-#include <vector>
+#include <list>
 
 class red
 {
 private:
-    vector <enrutador> n_enrutadores;
+    list <enrutador> n_enrutadores;
 
     void Conexiones_Iniciales(const string &router_name);
 public:
     red();
     ~red();
     void agregar_Enrutador(const string &router_name);
-    void quitar_Enrutador();
+    void eliminar_Enrutador(const string &router_name);
+    void Conectar2Enrutadores(const string &name1,const string &name2,int cost);
     void Costo();
     void MejorCamino();
     bool comprobar_Enrutador(const string &router_name);
 
-    vector<enrutador> getN_enrutadores() const;
-    void setN_enrutadores(const vector<enrutador> &value);
+    list<enrutador> getN_enrutadores() const;
+    void setN_enrutadores(const list<enrutador> &value);
 };
 
 #endif // RED_H

@@ -25,19 +25,9 @@ void enrutador::Conectar_Enrutador(const string &name, int costo)
     mapa_enrutador[name] = costo;
 }
 
-void enrutador::Quitar_Enrutador(const string &name)
+void enrutador::eliminar_Enrutador(const string &name)
 {
-
-}
-
-bool enrutador::Comprobar_conexion(const string &name)
-{
-    map<string,int>::iterator it;
-    for(it=mapa_enrutador.begin();it!=mapa_enrutador.end();it++){
-        if(it->first==name) return true;
-    }
-
-    return false;
+    mapa_enrutador.erase(name);
 }
 
 enrutador::enrutador()
