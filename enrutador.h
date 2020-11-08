@@ -2,6 +2,8 @@
 #define ENRUTADOR_H
 #include <iostream>
 #include <map>
+#include <utility>
+#include <algorithm>
 
 using namespace std;
 
@@ -9,19 +11,28 @@ class enrutador
 {
 private:
     string nombre;
-    map <string,int> mapa_enrutador;
+    //map<string,int> conexiones;
+    //map<string,pair<int,string>> costoNodos;
 
-    //bool Comprobar_conexion(const string &name);
 public:
+    map<string,int> conexiones;
+    map<string,pair<int,string>> costoNodos;
+    map<string,int>::iterator it;
+    map<string,pair<int,string>>::iterator it2;
+
+
     enrutador();
     ~enrutador();
-    map<string, int> getMapa_enrutador() const;
-    void setMapa_enrutador(const map<string, int> &value);
+    map<string, int> getConexiones() const;
+    void setConexiones(const map<string, int> &value);
     string getNombre() const;
     void setNombre(const string &value);
+    map<string, pair<int, string> > getCostoNodos() const;
+    void setCostoNodos(const map<string, pair<int, string> > &value);
 
     void Conectar_Enrutador(const string &name,int costo);
     void eliminar_Enrutador(const string &name);
+    void Agregar_Conexion(const string &name,const string &anterior, int cost);
 };
 
 #endif // ENRUTADOR_H

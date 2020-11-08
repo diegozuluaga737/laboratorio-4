@@ -19,7 +19,7 @@ int main()
             list<enrutador> lista;
             lista = network->getN_enrutadores();
             for(auto i=lista.begin();i!=lista.end();i++){
-                tabla = i->getMapa_enrutador();
+                tabla = i->getConexiones();
                 cout << i->getNombre() << ":" << endl;
                 for(it=tabla.begin();it!=tabla.end();it++){
                     cout << it->first << ": " << it->second << endl;
@@ -38,7 +38,7 @@ int main()
                 lista = network->getN_enrutadores();
                 for(auto i=lista.begin();i!=lista.end();i++){
                     if(i->getNombre()==nombre){
-                        tabla = i->getMapa_enrutador();
+                        tabla = i->getConexiones();
                         cout << i->getNombre() << ":" << endl;
                         for(it=tabla.begin();it!=tabla.end();it++){
                             cout << it->first << ": " << it->second << endl;
@@ -84,7 +84,10 @@ int main()
         }
             break;
         case 6:{
-
+            network->AlgoritmoDijkstra("a");
+            network->AlgoritmoDijkstra("b");
+            network->AlgoritmoDijkstra("c");
+            network->AlgoritmoDijkstra("d");
         }
             break;
         case 7:{

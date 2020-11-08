@@ -18,6 +18,7 @@ public:
     void Costo();
     void MejorCamino();
     bool comprobar_Enrutador(const string &router_name);
+    void AlgoritmoDijkstra(const string &nodoInicial);
 
     list<enrutador> getN_enrutadores() const;
     void setN_enrutadores(const list<enrutador> &value);
