@@ -129,6 +129,9 @@ void red::AlgoritmoDijkstra(const string &nodoInicial)
             }
         }
 
+        if(find(nodosVistos.begin(),nodosVistos.end(),nodo)!=nodosVistos.end())
+            break;
+
         for(auto router2=n_enrutadores.begin();router2!=n_enrutadores.end();router2++){
             if(router2->getNombre()==nodo){
                 for(router2->it=router2->conexiones.begin();router2->it!=router2->conexiones.end();router2->it++){
@@ -146,8 +149,6 @@ void red::AlgoritmoDijkstra(const string &nodoInicial)
         }
 
         nodosVistos.push_back(nodo);
-        if(router->conexiones.size()<=nodosVistos.size()+NoConectados)
-            break;
     }
 
     for(auto borrar=n_enrutadores.begin();borrar!=n_enrutadores.end();borrar++){
@@ -158,6 +159,7 @@ void red::AlgoritmoDijkstra(const string &nodoInicial)
     }
 
     n_enrutadores.push_back(*router);
+    OrdenarLista();
     delete router;
 }
 
@@ -181,16 +183,31 @@ int red::NodosNoConectados()
 
 void red::ActualizarTabla()
 {
+    list<string> router_name;
     string nodo;
     for(auto router=n_enrutadores.begin();router!=n_enrutadores.end();router++){
-        nodo = router->getNombre();
+        for(router->it=router->conexiones.begin();router->it!=router->conexiones.end();router->it++){
+            router_name.push_back(router->it->first);
+        }
+        break;
+    }
+
+    for(auto router=router_name.begin();router!=router_name.end();router++){
+        nodo = *router;
         AlgoritmoDijkstra(nodo);
     }
 }
 
 void red::TablaConexionesRed()
 {
-
+    cout << " \t";
+    for(auto router=n_enrutadores.begin();router!=n_enrutadores.end();router++){
+        cout << router->getNombre() << "\t";
+    }
+    cout << endl << endl;
+    for(auto router=n_enrutadores.begin();router!=n_enrutadores.end();router++){
+        cout << router->getNombre() << "\t";
+    }
 }
 
 void red::TablaCostosRed()
@@ -202,7 +219,7 @@ void red::TablaConexionesEnrutador(const string &nodo)
 {
     for(auto router=n_enrutadores.begin();router!=n_enrutadores.end();router++){
         if(router->getNombre()==nodo){
-          router->TablaConexiones();
+            router->TablaConexiones();
         }
     }
 }
@@ -211,7 +228,31 @@ void red::TablaCostosEnrutador(const string &nodo)
 {
     for(auto router=n_enrutadores.begin();router!=n_enrutadores.end();router++){
         if(router->getNombre()==nodo){
-          router->TablaCostos();
+            router->TablaCostos();
         }
     }
+}
+
+void red::OrdenarLista()
+{
+    list<string> orden;
+    list<string>::iterator router_name;
+    list<enrutador> ordenada;
+    for(auto router=n_enrutadores.begin();router!=n_enrutadores.end();router++){
+        for(router->it=router->conexiones.begin();router->it!=router->conexiones.end();router->it++){
+            orden.push_back(router->it->first);
+        }
+        break;
+    }
+
+    while(ordenada.size()!=n_enrutadores.size()){
+        router_name = orden.begin();
+        for(auto router=n_enrutadores.begin();router!=n_enrutadores.end();router++){
+            if(router->getNombre()==*router_name)
+                ordenada.push_back(*router);
+        }
+        orden.pop_front();
+    }
+
+    n_enrutadores = ordenada;
 }

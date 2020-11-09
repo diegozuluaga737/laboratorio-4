@@ -34,9 +34,10 @@ int main()
             cout <<"Nombre del enrutador: ";getline(cin,nombre);
             if(network->comprobar_Enrutador(nombre)){
                 cout << "Tabla de conexiones: " << endl;
-                cout << "\"Si el valor es -1 los enrutadores no se encunentran conectados directamente.\n";
+                cout << "\"Si el valor es -1 los enrutadores no se encunentran conectados directamente.\"\n";
+                cout << endl;
                 network->TablaConexionesEnrutador(nombre);
-                cout << "Tabla de costos: " << endl;
+                cout << "\nTabla de costos: \n" << endl;
                 network->TablaCostosEnrutador(nombre);
             }
             else
@@ -50,7 +51,7 @@ int main()
                 cout << "EL enrutador \"" << nombre << "\" ya existe.\n";
             else{
                 network->agregar_Enrutador(nombre);
-                //network->ActualizarTabla();
+                network->ActualizarTabla();
             }
         }
             break;
@@ -59,7 +60,7 @@ int main()
             cout <<"Nombre del enrutador: ";getline(cin,nombre);
             if(network->comprobar_Enrutador(nombre)){
                 network->eliminar_Enrutador(nombre);
-                //network->ActualizarTabla();
+                network->ActualizarTabla();
             }
             else
                 cout << "EL enrutaodor \"" << nombre << "\" no existe.\n";
@@ -74,7 +75,7 @@ int main()
                 cout << "El costo de envio no puede ser menor o igual a 0.\n";
             else if(network->comprobar_Enrutador(nombre) and network->comprobar_Enrutador(nombre2)){
                 network->Conectar2Enrutadores(nombre,nombre2,costo);
-                //network->ActualizarTabla();
+                network->ActualizarTabla();
             }
             else
                 cout << "Uno o ambos enrutados no existen.\n";
