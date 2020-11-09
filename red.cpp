@@ -76,9 +76,21 @@ void red::Conectar2Enrutadores(const string &name1, const string &name2, int cos
     }
 }
 
-void red::Costo()
+int red::Costo(const string &salida, const string &llegada)
 {
-
+    int costo = 0;
+    for(auto router=n_enrutadores.begin();router!=n_enrutadores.end();router++){
+        if(router->getNombre()==salida){
+            for(router->it2=router->costoNodos.begin();router->it2!=router->costoNodos.end();router->it2++){
+                if(router->it2->first==llegada){
+                    costo = router->it2->second.first;
+                    break;
+                }
+            }
+            break;
+        }
+    }
+    return costo;
 }
 
 void red::MejorCamino()
@@ -98,8 +110,7 @@ void red::AlgoritmoDijkstra(const string &nodoInicial)
 {
     list<string> nodosVistos;
     string nodo = nodoInicial;
-    int costo = 0, NoConectados = 0;
-    NoConectados = NodosNoConectados();
+    int costo = 0;
     enrutador *router = new enrutador;
     //map<string,int> copy_conexiones;
 
@@ -135,7 +146,8 @@ void red::AlgoritmoDijkstra(const string &nodoInicial)
         for(auto router2=n_enrutadores.begin();router2!=n_enrutadores.end();router2++){
             if(router2->getNombre()==nodo){
                 for(router2->it=router2->conexiones.begin();router2->it!=router2->conexiones.end();router2->it++){
-                    if(router2->it->first!=router->getNombre() and router2->it->second>0){
+                    if(find(nodosVistos.begin(),nodosVistos.end(),router2->it->first)!=nodosVistos.end()){}
+                    else if(router2->it->first!=router->getNombre() and router2->it->second>0){
                         if(router->costoNodos.find(router2->it->first)==router->costoNodos.end()){
                             router->Agregar_Conexion(router2->it->first,router2->getNombre(),router2->it->second+costo);
                         }
@@ -161,24 +173,6 @@ void red::AlgoritmoDijkstra(const string &nodoInicial)
     n_enrutadores.push_back(*router);
     OrdenarLista();
     delete router;
-}
-
-int red::NodosNoConectados()
-{
-    int NoConectados = 0;
-    bool bandera;
-    for(auto router=n_enrutadores.begin();router!=n_enrutadores.end();router++){
-        for(router->it=router->conexiones.begin();router->it!=router->conexiones.end();router->it++){
-            if(router->it->second>0){
-                bandera = false;
-                break;
-            }
-            bandera = true;
-        }
-        if(bandera)
-            NoConectados ++;
-    }
-    return NoConectados;
 }
 
 void red::ActualizarTabla()

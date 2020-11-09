@@ -16,11 +16,10 @@ public:
     void eliminar_Enrutador(const string &router_name);
     void Conectar2Enrutadores(const string &name1,const string &name2,int cost);
     void DEsconectar2Enrutadores(const string &name1,const string &name2,int cost);
-    void Costo();
+    int Costo(const string &salida, const string &llegada);
     void MejorCamino();
     bool comprobar_Enrutador(const string &router_name);
     void AlgoritmoDijkstra(const string &nodoInicial);
-    int NodosNoConectados();
     void ActualizarTabla();
     void TablaConexionesRed();
     void TablaCostosRed();

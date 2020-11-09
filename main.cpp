@@ -1,5 +1,5 @@
 #include <iostream>
-#include "funciones.h"
+#include "red.h"
 using namespace std;
 
 int main()
@@ -86,6 +86,20 @@ int main()
         }
             break;
         case 7:{
+            cin.ignore(10000,'\n');
+            cout << "Nombre del enrutador que envia: ";getline(cin,nombre);
+            cout << "Nombre del enrutador que recibe: ";getline(cin,nombre2);
+            if(network->comprobar_Enrutador(nombre) and network->comprobar_Enrutador(nombre2)){
+                if(network->Costo(nombre,nombre2)==-1)
+                    cout << "los enrutadores" << nombre << "y" << nombre2 << "No estan conectados directa o indirectamente\n";
+                else{
+                    cout << "El costo desde el enrutador " << nombre << "hasta el enrutador " << nombre2 << " es:\n";
+                    cout << nombre << " ----> " << nombre2 << " = "  << network->Costo(nombre,nombre2) << endl;
+                }
+            }
+            else
+                cout << "Uno o ambos enrutados no existen.\n";
+
 
         }
             break;
@@ -105,8 +119,9 @@ int main()
             cout << "Opcion no valida.\n";
         }
         cout << "\nIngrese:\n1.Ver tabla de la red.\n2.Ver tabla de un enrutador.\n3.Agregar enrutador.\n";
-        cout << "4.Eliminar enrutador de la red.\n5.Conectar 2 enrutadores.\n6.Conocer costo de envio.\n";
-        cout << "7.Camino a seguir de un paquete.\n8.Cargar red desde un archivo.\n9.Generar red aleatoria.\n";
+        cout << "4.Eliminar enrutador de la red.\n5.Conectar 2 enrutadores.\n6.Desconectar 2 enrutadores.\n";
+        cout << "7.Conocer costo de envio.\n8.Camino a seguir de un paquete.\n";
+        cout << "9.Cargar red desde un archivo.\n10.Generar red aleatoria.\n";
         cout << "0.Salir.\nSeleccione una opcion: ";cin >> opc;
     }
 
