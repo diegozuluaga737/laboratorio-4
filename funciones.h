@@ -3,6 +3,8 @@
 
 #include "red.h"
 
-void Agregar();
-void Quitar();
+void TablaConexiones(red network);
+void TablaCostos(red network);
+void ConexionesEnrutador(red network,const string nodo);
+void CostosEnrutador(red network, const string nodo);
 #endif // FUNCIONES_H

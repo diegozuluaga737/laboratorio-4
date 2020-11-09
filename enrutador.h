@@ -33,6 +33,8 @@ public:
     void Conectar_Enrutador(const string &name,int costo);
     void eliminar_Enrutador(const string &name);
     void Agregar_Conexion(const string &name,const string &anterior, int cost);
+    void TablaConexiones();
+    void TablaCostos();
 };
 
 #endif // ENRUTADOR_H

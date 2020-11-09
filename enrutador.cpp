@@ -45,6 +45,32 @@ void enrutador::Agregar_Conexion(const string &name, const string &anterior, int
     costoNodos[name] = make_pair(costo,anterior);
 }
 
+void enrutador::TablaConexiones()
+{
+    cout << " \t";
+    for(it=conexiones.begin();it!=conexiones.end();it++){
+      cout << it->first << "\t";
+    }
+    cout << endl << endl << nombre << "\t";
+    for(it=conexiones.begin();it!=conexiones.end();it++){
+        cout << it->second << "\t";
+    }
+    cout << endl;
+}
+
+void enrutador::TablaCostos()
+{
+    cout << " \t";
+    for(it2=costoNodos.begin();it2!=costoNodos.end();it2++){
+        cout << it2->first << "\t";
+    }
+    cout << endl << endl << nombre << "\t";
+    for(it2=costoNodos.begin();it2!=costoNodos.end();it2++){
+        cout << it2->second.first << "\t";
+    }
+    cout << endl;
+}
+
 enrutador::enrutador()
 {
     string nombre = "";

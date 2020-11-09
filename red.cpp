@@ -97,11 +97,12 @@ bool red::comprobar_Enrutador(const string &router_name)
 void red::AlgoritmoDijkstra(const string &nodoInicial)
 {
     list<string> nodosVistos;
-    list<string>::iterator it;
-    it = find(nodosVistos.begin(),nodosVistos.end(),"a");
     string nodo = nodoInicial;
-    int costo = 0;
+    int costo = 0, NoConectados = 0;
+    NoConectados = NodosNoConectados();
     enrutador *router = new enrutador;
+    //map<string,int> copy_conexiones;
+
     for(auto p=n_enrutadores.begin();p!=n_enrutadores.end();p++){
         if(p->getNombre()==nodoInicial){
             router->setNombre(p->getNombre());
@@ -143,10 +144,10 @@ void red::AlgoritmoDijkstra(const string &nodoInicial)
                 break;
             }
         }
+
         nodosVistos.push_back(nodo);
-        if(router->conexiones.size()==nodosVistos.size())
+        if(router->conexiones.size()<=nodosVistos.size()+NoConectados)
             break;
-        costo = 1000000000;
     }
 
     for(auto borrar=n_enrutadores.begin();borrar!=n_enrutadores.end();borrar++){
@@ -158,4 +159,59 @@ void red::AlgoritmoDijkstra(const string &nodoInicial)
 
     n_enrutadores.push_back(*router);
     delete router;
+}
+
+int red::NodosNoConectados()
+{
+    int NoConectados = 0;
+    bool bandera;
+    for(auto router=n_enrutadores.begin();router!=n_enrutadores.end();router++){
+        for(router->it=router->conexiones.begin();router->it!=router->conexiones.end();router->it++){
+            if(router->it->second>0){
+                bandera = false;
+                break;
+            }
+            bandera = true;
+        }
+        if(bandera)
+            NoConectados ++;
+    }
+    return NoConectados;
+}
+
+void red::ActualizarTabla()
+{
+    string nodo;
+    for(auto router=n_enrutadores.begin();router!=n_enrutadores.end();router++){
+        nodo = router->getNombre();
+        AlgoritmoDijkstra(nodo);
+    }
+}
+
+void red::TablaConexionesRed()
+{
+
+}
+
+void red::TablaCostosRed()
+{
+
+}
+
+void red::TablaConexionesEnrutador(const string &nodo)
+{
+    for(auto router=n_enrutadores.begin();router!=n_enrutadores.end();router++){
+        if(router->getNombre()==nodo){
+          router->TablaConexiones();
+        }
+    }
+}
+
+void red::TablaCostosEnrutador(const string &nodo)
+{
+    for(auto router=n_enrutadores.begin();router!=n_enrutadores.end();router++){
+        if(router->getNombre()==nodo){
+          router->TablaCostos();
+        }
+    }
 }

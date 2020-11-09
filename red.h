@@ -7,7 +7,6 @@ class red
 {
 private:
     list <enrutador> n_enrutadores;
-
     void Conexiones_Iniciales(const string &router_name);
 public:
     red();
@@ -19,6 +18,12 @@ public:
     void MejorCamino();
     bool comprobar_Enrutador(const string &router_name);
     void AlgoritmoDijkstra(const string &nodoInicial);
+    int NodosNoConectados();
+    void ActualizarTabla();
+    void TablaConexionesRed();
+    void TablaCostosRed();
+    void TablaConexionesEnrutador(const string &nodo);
+    void TablaCostosEnrutador(const string &nodo);
 
     list<enrutador> getN_enrutadores() const;
     void setN_enrutadores(const list<enrutador> &value);
