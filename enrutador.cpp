@@ -1,13 +1,14 @@
 #include "enrutador.h"
 
-map<string, int> enrutador::getConexiones() const
+enrutador::enrutador()
 {
-    return conexiones;
+    string nombre = "";
+    conexiones.clear();
 }
 
-void enrutador::setConexiones(const map<string, int> &value)
+enrutador::~enrutador()
 {
-    conexiones = value;
+
 }
 
 string enrutador::getNombre() const
@@ -18,16 +19,6 @@ string enrutador::getNombre() const
 void enrutador::setNombre(const string &value)
 {
     nombre = value;
-}
-
-map<string, pair<int, string> > enrutador::getCostoNodos() const
-{
-    return costoNodos;
-}
-
-void enrutador::setCostoNodos(const map<string, pair<int, string> > &value)
-{
-    costoNodos = value;
 }
 
 void enrutador::Conectar_Enrutador(const string &name, int costo)
@@ -69,15 +60,4 @@ void enrutador::TablaCostos()
         cout << it2->second.first << "\t";
     }
     cout << endl;
-}
-
-enrutador::enrutador()
-{
-    string nombre = "";
-    conexiones.clear();
-}
-
-enrutador::~enrutador()
-{
-
 }

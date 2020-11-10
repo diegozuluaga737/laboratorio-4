@@ -137,12 +137,11 @@ void red::AlgoritmoDijkstra(const string &nodoInicial)
     string nodo = nodoInicial;
     int costo = 0;
     enrutador *router = new enrutador;
-    //map<string,int> copy_conexiones;
 
     for(auto p=n_enrutadores.begin();p!=n_enrutadores.end();p++){
         if(p->getNombre()==nodoInicial){
             router->setNombre(p->getNombre());
-            router->setConexiones(p->getConexiones());
+            router->conexiones = p->conexiones;
             break;
         }
     }
