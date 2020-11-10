@@ -78,7 +78,7 @@ void red::Conectar2Enrutadores(const string &name1, const string &name2, int cos
 
 int red::Costo(const string &salida, const string &llegada)
 {
-    int costo = 0;
+    int costo = -1;
     for(auto router=n_enrutadores.begin();router!=n_enrutadores.end();router++){
         if(router->getNombre()==salida){
             for(router->it2=router->costoNodos.begin();router->it2!=router->costoNodos.end();router->it2++){
@@ -93,9 +93,34 @@ int red::Costo(const string &salida, const string &llegada)
     return costo;
 }
 
-void red::MejorCamino()
+void red::MejorCamino(const string &salida, const string &llegada)
 {
+    list<string> ruta;
+    string nodo;
+    nodo = llegada;
+    ruta.push_back(nodo);
+    for(auto router=n_enrutadores.begin();router!=n_enrutadores.end();router++){
+        if(router->getNombre()==salida){
+            while(nodo!=salida){
+                for(router->it2=router->costoNodos.begin();router->it2!=router->costoNodos.end();router->it2++){
+                    if(router->it2->first==nodo){
+                        nodo = router->it2->second.second;
+                        ruta.push_front(nodo);
+                        break;
+                    }
+                }
+            }
+            break;
+        }
+    }
 
+    for(auto router=ruta.begin();router!=ruta.end()--;router++){
+        if(router==ruta.begin())
+            cout << *router;
+        else
+            cout << " --> " << *router;
+    }
+    cout << endl;
 }
 
 bool red::comprobar_Enrutador(const string &router_name)
@@ -201,12 +226,27 @@ void red::TablaConexionesRed()
     cout << endl << endl;
     for(auto router=n_enrutadores.begin();router!=n_enrutadores.end();router++){
         cout << router->getNombre() << "\t";
+        for(router->it=router->conexiones.begin();router->it!=router->conexiones.end();router->it++){
+            cout << router->it->second << "\t";
+        }
+        cout << endl << endl;
     }
 }
 
 void red::TablaCostosRed()
 {
-
+    cout << " \t";
+    for(auto router=n_enrutadores.begin();router!=n_enrutadores.end();router++){
+        cout << router->getNombre() << "\t";
+    }
+    cout << endl << endl;
+    for(auto router=n_enrutadores.begin();router!=n_enrutadores.end();router++){
+        cout << router->getNombre() << "\t";
+        for(router->it2=router->costoNodos.begin();router->it2!=router->costoNodos.end();router->it2++){
+            cout << router->it2->second.first << "\t";
+        }
+        cout << endl << endl;
+    }
 }
 
 void red::TablaConexionesEnrutador(const string &nodo)

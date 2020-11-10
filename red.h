@@ -17,7 +17,7 @@ public:
     void Conectar2Enrutadores(const string &name1,const string &name2,int cost);
     void DEsconectar2Enrutadores(const string &name1,const string &name2,int cost);
     int Costo(const string &salida, const string &llegada);
-    void MejorCamino();
+    void MejorCamino(const string &salida, const string &llegada);
     bool comprobar_Enrutador(const string &router_name);
     void AlgoritmoDijkstra(const string &nodoInicial);
     void ActualizarTabla();

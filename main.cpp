@@ -1,5 +1,6 @@
 #include <iostream>
 #include "red.h"
+
 using namespace std;
 
 int main()
@@ -7,7 +8,7 @@ int main()
     short opc = 0,costo=0;
     red *network = new red;
     string nombre,nombre2;
-    cout << "Ingrese:\n1.Ver tabla de la red.\n2.Ver tabla de un enrutador.\n3.Agregar enrutador.\n";
+    cout << "Ingrese:\n1.Ver tabla de la red.\n2.Ver tabla de un enrutador.\n3.Agregar enrutador a la red.\n";
     cout << "4.Eliminar enrutador de la red.\n5.Conectar 2 enrutadores.\n6.Desconectar 2 enrutadores.\n";
     cout << "7.Conocer costo de envio.\n8.Camino a seguir de un paquete.\n";
     cout << "9.Cargar red desde un archivo.\n10.Generar red aleatoria.\n";
@@ -15,18 +16,12 @@ int main()
     while(opc!=0){
         switch (opc) {
         case 1:{
-            map<string, int> tabla;
-            map<string, int>::iterator it;
-            list<enrutador> lista;
-            lista = network->getN_enrutadores();
-            for(auto i=lista.begin();i!=lista.end();i++){
-                tabla = i->getConexiones();
-                cout << i->getNombre() << ":" << endl;
-                for(it=tabla.begin();it!=tabla.end();it++){
-                    cout << it->first << ": " << it->second << endl;
-                }
-                cout << endl;
-            }
+            cout << "Tabla de conexiones: " << endl;
+            cout << "\"Si el valor es -1 los enrutadores no se encunentran conectados directamente.\"\n";
+            cout << endl;
+            network->TablaConexionesRed();
+            cout << "\nTabla de costos: \n" << endl;
+            network->TablaCostosRed();
         }
             break;
         case 2:{
@@ -82,7 +77,19 @@ int main()
         }
             break;
         case 6:{
-
+            cin.ignore(10000,'\n');
+            cout << "Nombre del primer enrutador: ";getline(cin,nombre);
+            cout << "Nombre del segundo enrutador: ";getline(cin,nombre2);
+            if(network->comprobar_Enrutador(nombre) and network->comprobar_Enrutador(nombre2)){
+               if(network->Costo(nombre,nombre2)==-1)
+                cout << "los enrutadores" << nombre << " y " << nombre2 << " No estan conectados.\n";
+               else{
+                network->Conectar2Enrutadores(nombre,nombre2,-1);
+                network->ActualizarTabla();
+               }
+            }
+            else
+                cout << "Uno o ambos enrutados no existen.\n";
         }
             break;
         case 7:{
@@ -91,20 +98,30 @@ int main()
             cout << "Nombre del enrutador que recibe: ";getline(cin,nombre2);
             if(network->comprobar_Enrutador(nombre) and network->comprobar_Enrutador(nombre2)){
                 if(network->Costo(nombre,nombre2)==-1)
-                    cout << "los enrutadores" << nombre << "y" << nombre2 << "No estan conectados directa o indirectamente\n";
+                    cout << "los enrutadores" << nombre << " y " << nombre2 << " No estan conectados directa o indirectamente\n";
                 else{
-                    cout << "El costo desde el enrutador " << nombre << "hasta el enrutador " << nombre2 << " es:\n";
+                    cout << "El costo desde el enrutador " << nombre << " hasta el enrutador " << nombre2 << " es:\n";
                     cout << nombre << " ----> " << nombre2 << " = "  << network->Costo(nombre,nombre2) << endl;
                 }
             }
             else
                 cout << "Uno o ambos enrutados no existen.\n";
-
-
         }
             break;
         case 8:{
-
+            cin.ignore(10000,'\n');
+            cout << "Nombre del enrutador que envia: ";getline(cin,nombre);
+            cout << "Nombre del enrutador que recibe: ";getline(cin,nombre2);
+            if(network->comprobar_Enrutador(nombre) and network->comprobar_Enrutador(nombre2)){
+                if(network->Costo(nombre,nombre2)==-1)
+                    cout << "los enrutadores" << nombre << " y " << nombre2 << " No estan conectados directa o indirectamente\n";
+                else{
+                    cout << "ruta:\n";
+                    network->MejorCamino(nombre,nombre2);
+                }
+            }
+            else
+                cout << "Uno o ambos enrutados no existen.\n";
         }
             break;
         case 9:{
