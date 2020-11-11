@@ -28,11 +28,13 @@ int main()
             cin.ignore(10000,'\n');
             cout <<"Nombre del enrutador: ";getline(cin,nombre);
             if(network->comprobar_Enrutador(nombre)){
-                cout << "Tabla de conexiones: " << endl;
+                cout << "Tabla de conexiones:" << endl;
                 cout << "\"Si el valor es -1 los enrutadores no se encunentran conectados directamente.\"\n";
                 cout << endl;
                 network->TablaConexionesEnrutador(nombre);
-                cout << "\nTabla de costos: \n" << endl;
+                cout << "\nTabla de costos:" << endl;
+                cout << "\"Si el valor es -1 los enrutadores no se puede intercambiar informacion entre los enrutadores.\"\n";
+                cout << endl;
                 network->TablaCostosEnrutador(nombre);
             }
             else
@@ -47,6 +49,7 @@ int main()
             else{
                 network->agregar_Enrutador(nombre);
                 network->ActualizarTabla();
+                cout << "El enrutador ha sido agregado a la red.\n";
             }
         }
             break;
@@ -56,9 +59,10 @@ int main()
             if(network->comprobar_Enrutador(nombre)){
                 network->eliminar_Enrutador(nombre);
                 network->ActualizarTabla();
+                cout << "El enrutador ha sido eliminado de la red.\n";
             }
             else
-                cout << "EL enrutaodor \"" << nombre << "\" no existe.\n";
+                cout << "EL enrutador \"" << nombre << "\" no existe.\n";
         }
             break;
         case 5:{
@@ -71,6 +75,7 @@ int main()
             else if(network->comprobar_Enrutador(nombre) and network->comprobar_Enrutador(nombre2)){
                 network->Conectar2Enrutadores(nombre,nombre2,costo);
                 network->ActualizarTabla();
+                cout << "Los enrutadores han sido conectados.\n";
             }
             else
                 cout << "Uno o ambos enrutados no existen.\n";
@@ -86,6 +91,7 @@ int main()
                else{
                 network->Conectar2Enrutadores(nombre,nombre2,-1);
                 network->ActualizarTabla();
+                cout << "Los enrutadores han sido desconectados.\n";
                }
             }
             else

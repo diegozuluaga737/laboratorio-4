@@ -239,10 +239,11 @@ void red::TablaCostosRed()
         cout << router->getNombre() << "\t";
     }
     cout << endl << endl;
+
     for(auto router=n_enrutadores.begin();router!=n_enrutadores.end();router++){
         cout << router->getNombre() << "\t";
-        for(router->it2=router->costoNodos.begin();router->it2!=router->costoNodos.end();router->it2++){
-            cout << router->it2->second.first << "\t";
+        for(auto router2=n_enrutadores.begin();router2!=n_enrutadores.end();router2++){
+            cout << Costo(router->getNombre(),router2->getNombre()) << "\t";
         }
         cout << endl << endl;
     }
