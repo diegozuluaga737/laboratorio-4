@@ -20,6 +20,10 @@ void red::setN_enrutadores(const list<enrutador> &value)
     n_enrutadores = value;
 }
 
+
+
+//leer desde archivo
+
 void red::agregar_Enrutador(const string &router_name)
 {
     enrutador *router = new enrutador;
@@ -61,6 +65,8 @@ void red::eliminar_Enrutador(const string &router_name)
     }
 }
 
+
+// para el archivo
 void red::Conectar2Enrutadores(const string &name1, const string &name2, int cost)
 {
     for(auto router1=n_enrutadores.begin();router1!=n_enrutadores.end();router1++){
@@ -123,6 +129,8 @@ void red::MejorCamino(const string &salida, const string &llegada)
     cout << endl;
 }
 
+
+// para leer texto
 bool red::comprobar_Enrutador(const string &router_name)
 {
     for(auto it=n_enrutadores.begin();it!=n_enrutadores.end();it++){
@@ -199,6 +207,8 @@ void red::AlgoritmoDijkstra(const string &nodoInicial)
     delete router;
 }
 
+
+// para leer desde el archivo
 void red::ActualizarTabla()
 {
     list<string> router_name;
