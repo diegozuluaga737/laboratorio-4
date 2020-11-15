@@ -1,10 +1,8 @@
 #include <iostream>
 #include "red.h"
-#include <fstream>
 
 using namespace std;
 
-void leertexto(string , red * );
 
 
 
@@ -147,6 +145,11 @@ int main()
         }
             break;
         case 10:{
+            cin.ignore(10000,'\n');
+            delete network;
+             red *network= new red;
+            generar_aleatoria(network);
+
 
         }
             break;
@@ -162,60 +165,4 @@ int main()
 
     delete network;
     return 0;
-}
-
-
-void leertexto(string nombretexto, red *network){
-
-    string nodos="",linea="";
-        fstream lectura;
-
-
-
-        lectura.open(nombretexto,fstream::in|fstream::binary);
-        if(lectura.fail()){
-            cout<<"No se pudo abrir el archivo." << endl;
-
-        }
-        while(lectura.good()){
-            linea=lectura.get();
-            nodos.append(linea);
-        }
-
-        lectura.close();
-        nodos.pop_back();
-
-
-        int pos=0;
-
-        for(int num=0 ;pos!=-1;num++){
-                string nodo1,nodo2,costo;
-
-                pos = nodos.find(' ');
-                nodo1 = nodos.substr(0,pos);
-                pos = nodos.find(' ',pos+1);
-                nodo2 = nodos.substr(0,pos);
-                nodo2 = nodo2.substr(nodo1.size()+1);
-                pos = nodos.find('\r');
-                costo = nodos.substr(0,pos);
-                costo = costo.substr(nodo1.size()+nodo2.size()+2);
-
-                int costodomod = stoi(costo, nullptr, 10);
-
-
-                if (true!=network->comprobar_Enrutador(nodo1)) network->agregar_Enrutador(nodo1);
-                if (true!=network->comprobar_Enrutador(nodo2)) network->agregar_Enrutador(nodo2);
-                network->Conectar2Enrutadores(nodo1, nodo2, costodomod);
-
-                network->ActualizarTabla();
-
-
-
-
-                pos = nodos.find('\n');
-                nodos = nodos.substr(pos+1);
-
-
-    }
-
 }

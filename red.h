@@ -2,6 +2,10 @@
 #define RED_H
 #include "enrutador.h"
 #include <list>
+#include <fstream>
+#include<stdlib.h>
+#include<time.h>
+
 
 class red
 {
@@ -30,5 +34,10 @@ public:
     list<enrutador> getN_enrutadores() const;
     void setN_enrutadores(const list<enrutador> &value);
 };
+
+//funciones extra
+void leertexto(string , red * );
+void generar_aleatoria(red *network);
+
 
 #endif // RED_H

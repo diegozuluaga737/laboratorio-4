@@ -21,9 +21,6 @@ void red::setN_enrutadores(const list<enrutador> &value)
 }
 
 
-
-//leer desde archivo
-
 void red::agregar_Enrutador(const string &router_name)
 {
     enrutador *router = new enrutador;
@@ -66,7 +63,6 @@ void red::eliminar_Enrutador(const string &router_name)
 }
 
 
-// para el archivo
 void red::Conectar2Enrutadores(const string &name1, const string &name2, int cost)
 {
     for(auto router1=n_enrutadores.begin();router1!=n_enrutadores.end();router1++){
@@ -130,7 +126,6 @@ void red::MejorCamino(const string &salida, const string &llegada)
 }
 
 
-// para leer texto
 bool red::comprobar_Enrutador(const string &router_name)
 {
     for(auto it=n_enrutadores.begin();it!=n_enrutadores.end();it++){
@@ -208,7 +203,6 @@ void red::AlgoritmoDijkstra(const string &nodoInicial)
 }
 
 
-// para leer desde el archivo
 void red::ActualizarTabla()
 {
     list<string> router_name;
@@ -300,3 +294,136 @@ void red::OrdenarLista()
 
     n_enrutadores = ordenada;
 }
+
+
+void leertexto(string nombretexto, red *network){
+
+    string nodos="",linea="";
+        fstream lectura;
+
+
+
+        lectura.open(nombretexto,fstream::in|fstream::binary);
+        if(lectura.fail()){
+            cout<<"No se pudo abrir el archivo." << endl;
+
+        }
+        while(lectura.good()){
+            linea=lectura.get();
+            nodos.append(linea);
+        }
+
+        lectura.close();
+        nodos.pop_back();
+
+
+        int pos=0;
+
+        for(int num=0 ;pos!=-1;num++){
+                string nodo1,nodo2,costo;
+
+                pos = nodos.find(' ');
+                nodo1 = nodos.substr(0,pos);
+                pos = nodos.find(' ',pos+1);
+                nodo2 = nodos.substr(0,pos);
+                nodo2 = nodo2.substr(nodo1.size()+1);
+                pos = nodos.find('\r');
+                costo = nodos.substr(0,pos);
+                costo = costo.substr(nodo1.size()+nodo2.size()+2);
+
+                int costodomod = stoi(costo, nullptr, 10);
+
+
+                if (true!=network->comprobar_Enrutador(nodo1)) network->agregar_Enrutador(nodo1);
+                if (true!=network->comprobar_Enrutador(nodo2)) network->agregar_Enrutador(nodo2);
+                network->Conectar2Enrutadores(nodo1, nodo2, costodomod);
+
+                network->ActualizarTabla();
+
+
+
+
+                pos = nodos.find('\n');
+                nodos = nodos.substr(pos+1);
+
+
+    }
+
+}
+
+
+void generar_aleatoria(red *network){
+    srand(time(NULL));
+   // int  num=2+rand()%(101-2);
+int num=5;
+
+   string nodo,aux;
+
+
+    for (int i=0,j=65;i<num ; i++,j++) {
+       if(j==91) j=97;
+       if(j==123) j=65;
+       nodo=j;
+       aux=j;
+       if (network->comprobar_Enrutador(nodo)) {
+           nodo = nodo+aux;
+           network->agregar_Enrutador(nodo);
+
+
+       }
+       else {
+         network->agregar_Enrutador(nodo);
+
+       }
+    }
+    network->ActualizarTabla();
+
+    for (int i=0,j=65;i<num ; i++,j++) {
+        int num_enlaces=1+rand()%(num-i);
+        if(j==91) j=97;
+        if(j==123) j=65;
+        nodo=j;
+        aux=j;
+        if (num>50) {
+            nodo = nodo+aux;
+        }
+        string nodo2;
+        string aux2;
+        for (int l=0;l<num_enlaces ;l++ ) {
+            int numnodo2=1+rand()%(num-1);
+            int costo=1+rand()%(99);
+            for (int o=0,k=65;o<=numnodo2 ;o++,k++ ) {
+
+                if(k==91) k=97;
+                if(k==123) k=65;
+                 nodo2=k;
+                 aux2=k;
+                if (num>50) {
+                    nodo2 = nodo2+aux2;
+                }
+                if(numnodo2==o) {
+                    if (-1==network->Costo(nodo,nodo2)) {
+
+                        network->Conectar2Enrutadores(nodo,nodo2,costo);
+                    }
+                    else {
+                        l=l-1;
+                    }
+                }
+            }
+        }
+}
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
